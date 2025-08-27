@@ -1,0 +1,274 @@
+/* --- Reset & Base Styles --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fdf6e8; /* Logo-inspired warm cream */
+  color: #00434b; /* Logo-inspired dark teal for text */
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+/* --- Logo Header --- */
+.app-logo {
+  width: 100px;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+
+/* --- Typography --- */
+h1, h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  color: #003a42; /* Slightly darker teal for headings */
+}
+
+h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.invitation-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 5rem;
+  font-weight: 400;
+  margin: 1rem 0;
+  color: #00897b;
+}
+h2 { font-size: 2rem; margin-bottom: 1rem; }
+.subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; }
+.tagline { margin-bottom: 1rem; }
+.event-title { font-size: 1.1rem; margin: 1.5rem 0; }
+.date { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: #00897b; } /* New accent green */
+strong { font-weight: bold; }
+
+/* --- Page & Layout --- */
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s cubic-bezier(0.165, 0.84, 0.44, 1), transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-bottom: 1px solid rgba(0, 67, 75, 0.1); /* Subtle teal border */
+}
+.page:last-child { border-bottom: none; }
+.page.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Decorative Corners & Borders --- */
+.corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-color: #00897b; /* New accent green */
+  border-style: solid;
+}
+.top-left { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
+.top-right { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
+.bottom-left { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; }
+.bottom-right { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
+
+.recipient-box {
+  border: 1px solid rgba(0, 67, 75, 0.15); /* Subtle teal border */
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  position: relative;
+  background-color: rgba(253, 246, 232, 0.4); /* Faint cream background */
+}
+.recipient-box .corner { width: 20px; height: 20px; }
+.recipient-box .top-left { top: 10px; left: 10px; }
+.recipient-box .top-right { top: 10px; right: 10px; }
+.recipient-box .bottom-left { bottom: 10px; left: 10px; }
+.recipient-box .bottom-right { bottom: 10px; right: 10px; }
+.recipient-box p { margin: 0.2rem 0; }
+
+/* --- Buttons --- */
+.btn {
+  font-family: 'Poppins', sans-serif;
+  background-color: #00434b; /* Logo-inspired dark teal */
+  color: #fdf6e8; /* Logo-inspired warm cream */
+  border: none;
+  padding: 0.8rem 2.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 50px;
+  margin-top: 2rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn:hover, .btn:focus {
+  background-color: #003a42; /* Darker teal on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* --- Agenda List --- */
+.agenda-list {
+  list-style: none;
+  counter-reset: agenda-counter;
+  text-align: left;
+  max-width: 400px;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+.agenda-list li {
+  counter-increment: agenda-counter;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+.agenda-list li::before {
+  content: counter(agenda-counter, decimal-leading-zero);
+  flex-shrink: 0;
+  width: 2ch;
+  text-align: right;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00897b; /* New accent green */
+}
+
+/* --- RSVP Form --- */
+.rsvp-form {
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.form-group {
+  text-align: left;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+}
+input[type="text"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid rgba(0, 67, 75, 0.2); /* Subtle teal border */
+  border-radius: 4px;
+  background-color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+input[type="text"]:focus {
+  outline: none;
+  border-color: #00897b; /* Green on focus */
+  box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.2);
+}
+
+.attendance-options {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.attendance-options input[type="radio"] {
+  display: none;
+}
+.attendance-options label {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid rgba(0, 67, 75, 0.2);
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.attendance-options input[type="radio"]:checked + label {
+  background-color: #00434b; /* Dark teal when selected */
+  border-color: #00434b;
+  color: #fdf6e8;
+}
+
+/* --- Loader --- */
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #00897b; /* Green for loader accent */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- Confirmation Page --- */
+.confirmation-message {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: rgba(253, 246, 232, 0.5); /* Faint cream */
+    border-left: 4px solid #00897b; /* Green accent border */
+    text-align: left;
+    max-width: 500px;
+}
+
+.confirmation-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.confirmation-actions .btn {
+  margin-top: 0;
+}
+
+.page-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+    align-items: center;
+}
+
+.page-actions .btn {
+    margin-top: 0;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; }
+  .invitation-title { font-size: 4rem; }
+  h2 { font-size: 1.75rem; }
+  .page { padding: 3rem 1rem; }
+  .corner { width: 25px; height: 25px; }
+  .top-left, .bottom-left { left: 15px; }
+  .top-right, .bottom-right { right: 15px; }
+  .top-left, .top-right { top: 15px; }
+  .bottom-left, .bottom-right { bottom: 15px; }
+  .app-logo {
+    width: 80px;
+  }
+}
