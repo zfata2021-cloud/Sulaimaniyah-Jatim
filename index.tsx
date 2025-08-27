@@ -2,6 +2,21 @@ import React, { useState, useRef, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { GoogleGenAI } from '@google/genai';
 
+const AudioControl = ({ isPlaying, onToggle }: { isPlaying: boolean; onToggle: () => void }) => (
+  <button
+    className="audio-control"
+    onClick={onToggle}
+    aria-label={isPlaying ? 'Jeda Musik' : 'Putar Musik'}
+    title={isPlaying ? 'Jeda Musik' : 'Putar Musik'}
+  >
+    {isPlaying ? (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    ) : (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    )}
+  </button>
+);
+
 const App = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [formData, setFormData] = useState({ name: '', attending: 'yes' });
@@ -12,6 +27,8 @@ const App = () => {
     name: 'Prof. Dr. H. Abd. Halim Soebahar, M.A.',
     title: '(Ketua LPPD Provinsi Jawa Timur)',
   });
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isInvitationOpen, setIsInvitationOpen] = useState(false);
 
 
   const detailsRef = useRef<HTMLDivElement>(null);
@@ -64,7 +81,15 @@ const App = () => {
   
   const handleOpenInvitation = () => {
     scrollTo(detailsRef);
-    audioRef.current?.play().catch(e => console.error("Audio playback failed:", e));
+    setIsInvitationOpen(true);
+  };
+
+  const toggleAudio = () => {
+    if (isPlaying) {
+      audioRef.current?.pause();
+    } else {
+      audioRef.current?.play().catch(e => console.error("Audio playback failed:", e));
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,10 +131,20 @@ const App = () => {
   const handleStartOver = () => {
     setShowConfirmation(false);
     setFormData({ name: '', attending: 'yes' });
-    // This allows the animations to re-trigger
+    
+    // Reset audio
+    audioRef.current?.pause();
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
+    setIsPlaying(false);
+    setIsInvitationOpen(false);
+
+    // This allows the animations to re-trigger and resets view
     setTimeout(() => {
         const pages = document.querySelectorAll('.page');
         pages.forEach(page => page.classList.remove('visible'));
+        coverRef.current?.scrollIntoView({ behavior: 'auto' });
     }, 0);
   }
   
@@ -143,11 +178,18 @@ const App = () => {
           </div>
         </>
       )}
+
+      {isInvitationOpen && !showConfirmation && (
+          <AudioControl isPlaying={isPlaying} onToggle={toggleAudio} />
+      )}
+
       <audio
         ref={audioRef}
-        src="salavat-i-serife-128-ytshorts.savetube.me.mp3"
+        src="https://cdn.pixabay.com/audio/2022/11/17/audio_8722425b99.mp3"
         loop
         preload="auto"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
       />
     </div>
   );
